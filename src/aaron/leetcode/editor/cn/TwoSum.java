@@ -16,6 +16,9 @@
 
 package aaron.leetcode.editor.cn;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TwoSum {
 
     public static void main(String[] args) {
@@ -25,18 +28,38 @@ public class TwoSum {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[] twoSum(int[] nums, int target) {
-            //1.暴力破解 n^2
-            int[] ret = new int[2];
+//            int[] rtn = function1(nums, target);
+            int[] rtn = function2(nums,target);
+            return rtn;
+        }
+        //2.哈希表
+        private int[] function2(int[] nums, int target) {
+            int[] rtn = new int[2];
+            Map<Integer,Integer> map = new HashMap<>();
+            for (int i = 0; i < nums.length; i++) {
+                if(map.containsKey(target - nums[i])){
+                    rtn[0] = i;
+                    rtn[1] = map.get(target - nums[i]);
+                    return rtn;
+                }
+                map.put(nums[i],i);
+            }
+            return rtn;
+        }
+
+        //1.暴力破解 时间复杂度 O(n^2)
+        private int[] function1(int[] nums, int target) {
+            int[] rtn = new int[2];
             for (int i = 0; i < nums.length; i++) {
                 for (int j = i + 1; j < nums.length; j++){
                     if (nums[i] + nums[j] == target){
-                        ret[0] = i;
-                        ret[1] = j;
-                        return ret;
+                        rtn[0] = i;
+                        rtn[1] = j;
+                        return rtn;
                     }
                 }
             }
-            return ret;
+            return rtn;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
